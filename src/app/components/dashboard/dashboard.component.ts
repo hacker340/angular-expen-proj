@@ -5,7 +5,7 @@ import { HttpService } from 'src/app/services/http.service';
 import { AppService } from 'src/app/services/app.service';
 import { Urls } from 'src/app/utils/urls';
 
-import {Chart} from 'chart.js';
+import { Chart } from 'chart.js';
 
 // const Chart = require('chart.js');
 
@@ -87,7 +87,7 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  openDialog(type: string, expense: any) {
+  openDialog(type?: string, expense?: any) {
     const data: any = {};
     if (expense) {
       data.expense = _.cloneDeep(expense);
