@@ -1,0 +1,44 @@
+<h1 mat-dialog-title>
+  <span *ngIf="editMode">Edit </span>
+  <span *ngIf="viewMode">View </span>
+  <span *ngIf="!viewMode && !editMode">Add </span>
+  Expense
+</h1>
+<div mat-dialog-content>
+  <div class="row">
+    <div class="col-md-12">
+      <label for="name" class="req">Expense Name</label>
+      <input type="text" name="name" id="name" class="form-control" [(ngModel)]="expense.name" [disabled]="viewMode">
+    </div>
+  </div>
+  <div class="row mt-16">
+    <div class="col-md-12">
+      <label for="amount" class="req">Amount</label>
+      <input type="number" name="amount" id="amount" min="0" class="form-control" [(ngModel)]="expense.amount"
+        [disabled]="viewMode">
+    </div>
+  </div>
+  <div class="row mt-16">
+    <div class="col-md-12">
+      <label for="date">Date</label>
+      <input type="date" name="date" id="date" class="form-control" [(ngModel)]="expense.date" [disabled]="viewMode">
+    </div>
+  </div>
+
+  <div class="row mt-16">
+    <div class="col-md-12">
+      <label for="name">Category</label>
+      <mat-select class="form-control" [compareWith]="compareFn" name="category" [(ngModel)]="expense.category"
+        [disabled]="viewMode">
+        <mat-option *ngFor="let category of categories" [value]="category._id">
+          {{category?.name}}
+        </mat-option>
+      </mat-select>
+    </div>
+  </div>
+  <p></p>
+</div>
+<div mat-dialog-actions align="end">
+  <button type="button" class="btn btn-light" mat-dialog-close>Close</button>
+  <button type="button" class="btn btn-primary ml-16" (click)="onSubmit()" *ngIf="!viewMode">Save</button>
+</div>

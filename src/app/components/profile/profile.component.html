@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="d-flex flex-wrap mt-32" *ngIf="user">
+    <div style="width:200px;">
+      <div class="col-md-2" style="width:128px;height:128px;">
+        <img [src]="user?.photoURL" alt="user image" width="128" height="128">
+      </div>
+    </div>
+    <div class="flex-grow-1">
+      <div class="row">
+        <div class="col-md-6">
+          <div>
+            name : {{user?.displayName}}
+          </div>
+          <div>
+            Email : {{user?.email}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

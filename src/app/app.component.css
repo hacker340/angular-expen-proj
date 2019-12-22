@@ -1,0 +1,15 @@
+.side-bar {
+  height: 100%;
+  width: 220px;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  background-color:
+    #cfcfcf;
+  overflow-x: hidden;
+}
+
+.main-content {
+  margin-left: 220px;
+  
+}

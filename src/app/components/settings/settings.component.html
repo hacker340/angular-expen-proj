@@ -1,0 +1,67 @@
+<div class="container-fluid ">
+  <div class="row mv-32">
+    <div class="col-md-4">
+      <label for="budget">Total Budget</label>
+    </div>
+    <div class="col-md-4">
+      <input type="number" min="0" class="form-control" id="budget" id="budget" [(ngModel)]="settings.amount">
+    </div>
+    <div class="col-md-4">
+      <button (click)="onSave()" class="btn btn-primary">Update</button>
+    </div>
+  </div>
+
+  <div class="row mv-32">
+    <div class="col-md-4">
+      <label for="category">Categories</label>
+    </div>
+    <div class="col-md-4">
+      <input type="text" maxlength="16" class="form-control" id="category" id="category" [(ngModel)]="category.name">
+    </div>
+    <div class="col-md-4">
+      <button (click)="onCategoryAdd()" class="btn btn-primary">Add</button>
+    </div>
+  </div>
+
+
+  <div class="row mv-32">
+    <div class="col-md-12">
+      <table class="table table-sm table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col" style="width: 50px;"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let category of categories;let i = index">
+            <td>
+              <s *ngIf="category?.isDeleted">{{i+1}}</s>
+              <div *ngIf="!category?.isDeleted"> {{i+1}} </div>
+            </td>
+            <td>
+              <s *ngIf="category?.isDeleted">{{category?.name}}</s>
+              <div *ngIf="!category?.isDeleted"> {{category?.name}} </div>
+            </td>
+            <td>
+              <div>
+                <i *ngIf="!category?.isDeleted" class="fa fa-trash pointer" (click)="onDeleteCategory(category)"
+                  title="Delete category"></i>
+                <i *ngIf="category?.isDeleted" class="fa fa-undo pointer" (click)="onDeleteUndo(category)"
+                  title="Undo category delete"></i>
+
+                <!-- <i class="fa fa-ellipsis-v pointer" [matMenuTriggerFor]="menu"></i>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item>Item 1</button>
+                  <button mat-menu-item>Item 2</button>
+                </mat-menu> -->
+
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

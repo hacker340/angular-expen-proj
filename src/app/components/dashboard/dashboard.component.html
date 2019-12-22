@@ -1,0 +1,134 @@
+<div class="container-fluid">
+
+  <div class="row mt-16">
+    <div class="col-md-6">
+      <mat-card style="height: 300px;">
+        <h5>Budget Overview</h5>
+        <mat-card-content>
+          <div class="row">
+            <div class="col-md-6" *ngIf="chartOne">
+              <canvas id="myChart" width="80" height="80"></canvas>
+            </div>
+            <div class="col-md-6" style="align-items: center; text-align: center;">
+              <label>Total Budget: </label>
+              <h4>{{settings.amount || 0}}</h4>
+              <label>Total Expenses: </label>
+              <h4>{{totalExpenseAmount || 0}}</h4>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="col-md-6">
+      <mat-card style="height: 300px;">
+        <h5>Category wise overview</h5>
+        <mat-card-content>
+          <div class="row" *ngIf="categories.length <=5 && chartTwo">
+            <div class="col-md-6">
+              <canvas id="myChart2" style="width: 90px;height:90px;"></canvas>
+            </div>
+          </div>
+          <div class="row" *ngIf="categories.length >5">
+            <div class="col-md-12" *ngIf="categories.length >5">
+              <div style="overflow-y: scroll; height:260px;">
+                <table class="table table-sm table-bordered">
+                  <thead>
+                    <tr>
+                      <th scope="col">Name</th>
+                      <th scope="col">Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let category of categories;let i = index">
+                      <td>{{graphLabels[i]}}</td>
+                      <td>{{graphLabelAmounts[i]}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+
+
+
+  <div class="row mt-16">
+    <div class="col-md-12">
+      <button type="button" class="btn btn-primary" (click)="openDialog()">Add Expense</button>
+    </div>
+  </div>
+
+  <div class="row mv-32">
+    <div class="col-md-12">
+      <ngx-datatable class="material" [rows]="expenses" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+        [rowHeight]="50" [limit]="10">
+
+        <ngx-datatable-column name="#" prop="_id">
+          <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+            <div>
+              <s *ngIf="row?.isDeleted">{{ rowIndex + 1 }}</s>
+              <span *ngIf="!row?.isDeleted">{{ rowIndex + 1 }}</span>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Category" prop="category">
+          <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+            <div>
+              <s *ngIf="row?.isDeleted">{{ row?.category?.name }}</s>
+              <span *ngIf="!row?.isDeleted">{{ row?.category?.name }}</span>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Item name" prop="name">
+          <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+            <div>
+              <s *ngIf="row?.isDeleted">{{ row?.name }}</s>
+              <span *ngIf="!row?.isDeleted">{{ row?.name }}</span>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Amount" prop="amount">
+          <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+            <div>
+              <s *ngIf="row?.isDeleted">{{ row?.amount }}</s>
+              <span *ngIf="!row?.isDeleted">{{( row?.amount || 0) | currency : 'INR'}}</span>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Expense Date" prop="date">
+          <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+            <div>
+              <s *ngIf="row?.isDeleted">{{ row?.date | date:'dd-MM-yyyy' }}</s>
+              <span *ngIf="!row?.isDeleted">{{ row?.date | date:'dd-MM-yyyy'}}</span>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column>
+          <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+            <button mat-icon-button type="button" class="float-right" [matMenuTriggerFor]="menu">
+              <i class="fa fa-ellipsis-v"></i>
+            </button>
+            <mat-menu #menu="matMenu">
+              <!-- <button mat-menu-item (click)="openDialog('viewMode',row)">View</button> -->
+              <button mat-menu-item *ngIf="!row?.isDeleted" (click)="openDialog('editMode',row)">Edit</button>
+              <button mat-menu-item *ngIf="!row?.isDeleted" (click)="onDeleteExpense(row)">Delete</button>
+              <button mat-menu-item *ngIf="row?.isDeleted" (click)="onUndoDelete(row)">Undo Delete</button>
+
+            </mat-menu>
+          </ng-template>
+        </ngx-datatable-column>
+
+      </ngx-datatable>
+    </div>
+  </div>
+</div>
