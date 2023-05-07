@@ -28,7 +28,7 @@
     "bootstrap": "^4.3.1",
     "chart.js": "^2.9.3",
     "firebase": "^7.6.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "lodash": "^4.17.15",
     "ngx-toastr": "^11.2.1",
     "rxjs": "~6.4.0",
